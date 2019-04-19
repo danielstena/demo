@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class AddTableToReviews extends Migration
+class AddColumnToReviews extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,9 @@ class AddTableToReviews extends Migration
      */
     public function up()
     {
-        // Schema::table('reviews', function (Blueprint $table) {
-        //     $table->foreign('prod_id')->references('id')->on('products');
-        //     $table->string('prod_name');
-        // });
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->string('user_name');
+        });
     }
 
     /**

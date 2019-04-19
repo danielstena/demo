@@ -18,8 +18,9 @@ class CreateReviewsTable extends Migration
             $table->text('comment');
             $table->integer('score');
             $table->integer('user_id');
-            $table->integer('prod_id')->unsigned()->nullable();;
-            $table->foreign('prod_id')->references('id')->on('products');
+            $table->string('user_name');
+            $table->integer('prod_id')->unsigned()->nullable();
+            $table->foreign('prod_id')->references('id')->on('products')->onDelete('cascade');
             $table->string('prod_name');
             $table->timestamps();
         });

@@ -18,25 +18,6 @@ Route::get('/services', 'pagescontroller@services');
 route::resource('products','ProductController');
 route::resource('review','ReviewController');
 
-// Route::get('/review', function(){
-//     return Request::post();;
-// });
-
-// Route::get('/about',function(){
-//     return view('pages.about');
-// });
-// Route::get('/product/{id}',function($id){
-//     return 'Det här är'.$id;
-// });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

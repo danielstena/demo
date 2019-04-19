@@ -5,9 +5,6 @@
 @section('content')
     <h1 class="text-center">Products</h1>
         <div class="container text-center">
-            <a href="/products" class="btn btn-primary mb-3">
-                Tillbaka
-            </a>
             <div class="row">
                 <div class="col-md-12 card p-5">
                     <div class="card-title">
@@ -23,7 +20,7 @@
             </div>
         </div>
 
-        <form class="mt-5 mb-5" method="post" action="/review" enctype="multipart/form-data">
+        <form method="post" action="/review" enctype="multipart/form-data">
        @if(session()->has('logged_in'))
             <div class="alert alert-success }}"> 
             {{ session('logged_in') }}
@@ -34,10 +31,10 @@
             </div>  
         @endif
         {{ csrf_field() }}
-            <div class="form-group row">
+            <div class="form-group row mt-3">
                 <label for="titleid" class="col-sm-3 col-form-label">Comment</label>
                 <div class="col-sm-9">
-                    <input name="comment" type="text" class="form-control" id="comment" placeholder="Comment">
+                    <textarea name="comment" type="text-area" class="form-control" id="comment"></textarea>
                 </div>
                 <label for="titleid" class="col-sm-3 col-form-label">Score</label>
                 <div class="col-sm-9 float-left" >
@@ -51,18 +48,18 @@
                 <input type="hidden" name="prod_name" id="hiddenField" value="{{$products->name}}" />
             </div>
             <div class="form-group row">
-                <div class="offset-sm-3 col-sm-9">
+                <div class="col-sm-3">
                     <button type="submit" class="btn btn-primary">Submit review</button>
                 </div>
             </div>
         </form>
         @if(count($reviews) > 0)
             <div class="reviews">
-                <div class="container border">
+                <div class="container">
                     <div class="row">
                         @foreach ($reviews as $review )
                             @if($review->prod_id == $products->id)
-                                <div class="col-md-12 p-2 mb-5 card text-center">
+                                <div class="col-md-6 offset-md-3 p-2 mb-5 card text-center">
                                         <div class="card-title">
                                             <h2>{{$products->name}}</h2>
                                         </div>
@@ -74,7 +71,7 @@
                                                 Comment: {{$review->comment}} 
                                             </div>
                                                 <div>
-                                                Commenter: {{$review->user_id}} 
+                                                Commenter: {{$review->user_name}} 
                                             </div>
                                         </div>  
                                 </div>
@@ -84,6 +81,6 @@
                 </div>
             </div>
         @else
-            <p>mindre</p>
+            <p class="text-center">There are no reviews for this product at the moment.</p>
         @endif
 @endsection

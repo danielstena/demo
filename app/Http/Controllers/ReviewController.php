@@ -49,6 +49,7 @@ class ReviewController extends Controller
             $review->prod_id = $request->input('prod_id');
             $review->prod_name = $request->input('prod_name');
             $review->user_id = Auth::user()->id;
+            $review->user_name = Auth::user()->name;
             $review->save();  
             
             Session::flash('logged_in', 'Thank you for your review!');

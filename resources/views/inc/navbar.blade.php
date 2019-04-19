@@ -1,3 +1,5 @@
+<?php 
+?>
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
             <div class="container">
                 <a class="navbar-brand" href="{{ url('/') }}">
@@ -10,12 +12,19 @@
                 <div class="collapse navbar-collapse" id="navbarSupportedContent">
                     <!-- Left Side Of Navbar -->
                     <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                              <a class="nav-link" href="/products">Products</a>
-                            </li>
-                            <li class="nav-item">
-                              <a class="nav-link" href="/services">Services</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="/products">Products</a>
+                        </li>
+                        @if (Auth::check())
+                            @if (Auth::user()->admin == true)
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/services">Services</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" href="/products/create">Create product</a>
+                                </li>
+                            @endif
+                        @endif
                     </ul>
 
                     <!-- Right Side Of Navbar -->

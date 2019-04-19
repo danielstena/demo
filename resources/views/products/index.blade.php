@@ -6,16 +6,19 @@
         <div class="container border">
             <div class="row">
                 @foreach ($products as $product )
-                    <div class="col-md-4 p-2 card text-center">
+                    <div class="card col-md-4 p-2 card text-center">
                         <a href="/products/{{$product->id}}">
-                            <div class="card-title">
-                            <h2>{{$product->name}}</h2>
+                        {{-- <img class="card-img-top" src="https://picsum.photos/200/150/?random"> --}}
+                            <div class="card-block">
+                                <h4 class="card-title"><h2>{{$product->name}}</h2></h4>
+                                {{-- <div class="card-text">
+                                    Tawshif is a web designer living in Bangladesh.
+                                </div> --}}
                             </div>
-                            <div class="card-body">
-                            {{$product->price}} kr
+                            <div class="card-footer">
+                                {{$product->price}} kr
                             </div>
-                            {{$product->id}}
-                        </a>    
+                        </a>
                     </div>
                 @endforeach
             </div>

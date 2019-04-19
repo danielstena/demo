@@ -5,15 +5,12 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Product;
 use App\Review;
+use Illuminate\Support\Facades\Auth;
+
 
 class ProductController extends Controller
 {
 
-    // public function test()
-    // {
-    //     $review = Review::orderBy('name','desc')->get();;
-    //     return view('products.show')->with('review',$review);
-    // }
     /**
      * Display a listing of the resource.
      *
@@ -21,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $review = Review::orderBy('name','asc')->get();
+        $review = Review::orderBy('id','asc')->get();
         $products = Product::orderBy('name','asc')->get();
         return view('products.index')->with('products',$products);
     }
@@ -33,7 +30,12 @@ class ProductController extends Controller
      */
     public function create()
     {
-        //
+        $products = Product::orderBy('name','asc')->get();
+        
+        if (Auth::user()->admin){
+            return view('products.create',['products' => $products]);
+        }
+        return redirect('/');
     }
 
     /**
@@ -44,11 +46,29 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-  
-        // $products = new Product;
-        // $products->comment = $request->input('comment');
-        // $products->score = $request->input('score');
-        // $products->save();
+        //GET FILE
+        if($request->file('image')){
+            $file = $request->file('image');
+            $filename = $file->getClientOriginalName(); 
+
+            //GET FULL PATH AND FILE
+            $path = storage_path('images/');
+            $image = $path.$filename;
+            
+            //STORE FILE
+            //$file->storeAs('images', $filename);    
+        }
+
+        // dd($request->input('price'));
+        $products = new Product;
+        $products->name = $request->input('name');
+        $products->desc = $request->input('desc');
+        $products->price = $request->input('price');
+        $products->price = $request->input('image');
+        
+        $products->save();
+
+        return redirect('/products/create');
 
     }
 
@@ -67,7 +87,6 @@ class ProductController extends Controller
            'products' => $products, 'reviews' => $review
         );
         return view('products.show')->with($data);
-        //    return view('products.show')->with('products',$products);   
     }
 
     /**
@@ -101,6 +120,11 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        // delete
+        $product = Product::find($id);
+        $product->delete();
+
+        // redirect
+        return redirect('/products/create');
     }
 }
