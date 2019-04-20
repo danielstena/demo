@@ -14,7 +14,7 @@ class AddColumnToReviews extends Migration
     public function up()
     {
         Schema::table('reviews', function (Blueprint $table) {
-            $table->string('user_name');
+            // $table->string('user_name');
         });
     }
 

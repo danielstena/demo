@@ -10667,8 +10667,23 @@ a.text-dark:focus {
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
 }
 
-.navbar-laravel {
-  background-color: #fff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+.product-show {
+  text-align: center;
+}
+
+.product-show img {
+  max-width: 50%;
+  margin: auto;
+}
+
+.product-index {
+  text-align: center;
+}
+
+.product-index img {
+  width: 100%;
+  height: 20vw;
+  -o-object-fit: cover;
+     object-fit: cover;
 }
 

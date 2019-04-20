@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Product;
 use App\Review;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 
 class ProductController extends Controller
@@ -46,25 +47,36 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
-        //GET FILE
-        if($request->file('image')){
-            $file = $request->file('image');
-            $filename = $file->getClientOriginalName(); 
+        // //GET FILE
+        $file = $request->file('image');
+        $filename = $file->getClientOriginalName(); 
 
-            //GET FULL PATH AND FILE
-            $path = storage_path('images/');
-            $image = $path.$filename;
-            
-            //STORE FILE
-            //$file->storeAs('images', $filename);    
-        }
+        
+        // Storage::put('file.jpg', $contents);
+        
+        // //STORE FILE
+        // $file->storeAs('/images', $filename);    
 
-        // dd($request->input('price'));
+        // $path = Storage::putFile('images', $request->file('image'));
+        // $path = $request->file('avatar')->store(
+        //     'avatars/'.$request->user()->id, 'public'
+        // );
+        // $path = $request->file('image')->store(
+        //     'images/'.$request->file('image')->getClientOriginalName(), 'public'
+        // );
+
+        // dd($path);
+        $path = $request->file('image')->storeAs(
+            'images', $filename, ['disk' => 'public']
+        );
+        // dd($path);
+        
+
         $products = new Product;
         $products->name = $request->input('name');
         $products->desc = $request->input('desc');
         $products->price = $request->input('price');
-        $products->price = $request->input('image');
+        $products->image = $path;
         
         $products->save();
 

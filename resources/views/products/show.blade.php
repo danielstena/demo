@@ -3,15 +3,18 @@
 @extends ('layouts.app')
 
 @section('content')
-    <h1 class="text-center">Products</h1>
-        <div class="container text-center">
+    <h1 class="text-center">{{$products->name}}</h1>
+        <div class="container product-show">
             <div class="row">
                 <div class="col-md-12 card p-5">
+                  <img class="card-img-top show" src="{{ url('storage/'. $products->image) }}">
                     <div class="card-title">
                         <h3>{{$products->name}}</h3>
                     </div>
                     <div class="card-body">
-                        {{$products->desc}}
+                        <div class="card-body">
+                            <p class="card-text"> {{$products->desc}}</p>
+                        </div>
                     </div>
                     <div class="card-price">
                     {{$products->price}} kr
