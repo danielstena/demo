@@ -39,11 +39,27 @@ class ReviewController extends Controller
      */
     public function store(Request $request)
     {
-        if (Auth::check())
-        {
-            // The user is logged in...
-            $id = $request->input('prod_id');
-            $review = new Review;
+        
+        $this->validate(request(), [
+            'comment' => 'required',
+            'score' => 'required|numeric'
+        ]);
+
+        $id = $request->input('prod_id');
+        $review = new Review;
+        
+        //CHECK IF USER IS CHECKED IN
+        if (Auth::check()) :
+            foreach ($review as $rev) :
+                //CHECK IF USER HAS REVIEWED PRODUCT BEFORE
+                if(!$review->prod_id == $request->input('prod_id') && !$review->user_id == Auth::user()->id) :  
+                    
+                    //RETURN WITH MESSAGE IF REVIEWED BEFORE
+                    $request->session()->flash('not_loggedin', 'You have already reviewed this product');
+                    return Redirect::to('/products/'.$id);
+                endif;
+            endforeach;
+           
             $review->comment = $request->input('comment');
             $review->score = $request->input('score');
             $review->prod_id = $request->input('prod_id');
@@ -54,14 +70,14 @@ class ReviewController extends Controller
             
             Session::flash('logged_in', 'Thank you for your review!');
             return Redirect::to('/products/'.$id);
-        }
-    else
-        {
+        
+        else: 
+            //IF NOT LOGGED IN, RETURN BACK WITH MESSAGE
             $id = $request->input('prod_id');
-            // Session::flash('not_loggedin', 'You have to login to be able to write a review');
             $request->session()->flash('not_loggedin', 'You have to login to be able to write a review');
             return Redirect::to('/products/'.$id);
-        }
+            
+        endif;
     }
 
     /**

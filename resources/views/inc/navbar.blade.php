@@ -18,9 +18,6 @@
                         @if (Auth::check())
                             @if (Auth::user()->admin == true)
                                 <li class="nav-item">
-                                    <a class="nav-link" href="/services">Services</a>
-                                </li>
-                                <li class="nav-item">
                                     <a class="nav-link" href="/products/create">Create product</a>
                                 </li>
                             @endif

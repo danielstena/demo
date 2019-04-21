@@ -1,5 +1,3 @@
-
-
 @extends ('layouts.app')
 
 @section('content')
@@ -33,6 +31,15 @@
                 {{ session('not_loggedin') }}
             </div>  
         @endif
+        @if ($errors->any())
+            <div class="alert alert-danger">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         {{ csrf_field() }}
             <div class="form-group row mt-3">
                 <label for="titleid" class="col-sm-3 col-form-label">Comment</label>
@@ -62,21 +69,21 @@
                     <div class="row">
                         @foreach ($reviews as $review )
                             @if($review->prod_id == $products->id)
-                                <div class="col-md-6 offset-md-3 p-2 mb-5 card text-center">
-                                        <div class="card-title">
-                                            <h2>{{$products->name}}</h2>
+                                <div class="col-md-6 offset-md-3 p-2 mb-3 card text-center">
+                                    <div class="card-body">
+                                        <div>
+                                        <?php $score = $review->score ?>
+                                            @for ($i = 0; $i < $score; $i++)
+                                                    <span class="fa fa-star checked"></span>
+                                            @endfor 
                                         </div>
-                                        <div class="card-body">
                                             <div>
-                                                Score: {{$review->score}} 
-                                            </div>
-                                                <div>
-                                                Comment: {{$review->comment}} 
-                                            </div>
-                                                <div>
-                                                Commenter: {{$review->user_name}} 
-                                            </div>
-                                        </div>  
+                                                {{$review->comment}} 
+                                        </div>
+                                        <div class="pt-3">
+                                            Reviewer: {{$review->user_name}} 
+                                        </div>
+                                    </div>  
                                 </div>
                             @endif
                         @endforeach

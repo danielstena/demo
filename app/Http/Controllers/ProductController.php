@@ -47,30 +47,19 @@ class ProductController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate(request(), [
+            'name' => 'required',
+            'desc' => 'required',
+            'price' => 'required|numeric',
+            'image' => 'required'
+        ]);
         // //GET FILE
         $file = $request->file('image');
         $filename = $file->getClientOriginalName(); 
 
-        
-        // Storage::put('file.jpg', $contents);
-        
-        // //STORE FILE
-        // $file->storeAs('/images', $filename);    
-
-        // $path = Storage::putFile('images', $request->file('image'));
-        // $path = $request->file('avatar')->store(
-        //     'avatars/'.$request->user()->id, 'public'
-        // );
-        // $path = $request->file('image')->store(
-        //     'images/'.$request->file('image')->getClientOriginalName(), 'public'
-        // );
-
-        // dd($path);
         $path = $request->file('image')->storeAs(
             'images', $filename, ['disk' => 'public']
-        );
-        // dd($path);
-        
+        );        
 
         $products = new Product;
         $products->name = $request->input('name');
@@ -132,11 +121,9 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        // delete
         $product = Product::find($id);
         $product->delete();
 
-        // redirect
         return redirect('/products/create');
     }
 }
