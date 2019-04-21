@@ -10687,3 +10687,14 @@ a.text-dark:focus {
      object-fit: cover;
 }
 
+.card {
+  height: 50vh;
+}
+
+.card .card-footer {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  right: 0;
+}
+

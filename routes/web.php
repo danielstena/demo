@@ -12,12 +12,16 @@
 */
 
 Route::get('/', 'pagescontroller@index');
-Route::get('/about', 'pagescontroller@about');
-Route::get('/services', 'pagescontroller@services');
 
 route::resource('products','ProductController');
+
+Route::group(['middleware' => 'admin'], function(){
+    Route::get('products/create', 'ProductController@create');
+});
+
 route::resource('review','ReviewController');
 
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');
+

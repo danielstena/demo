@@ -17,3 +17,13 @@
     object-fit: cover;
   }
 }
+
+.card{
+  height: 50vh;
+  .card-footer{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
+    right: 0;
+  }
+}

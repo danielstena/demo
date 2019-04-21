@@ -19,7 +19,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $review = Review::orderBy('id','asc')->get();
+        $this->middleware('guest');
+
         $products = Product::orderBy('name','asc')->get();
         return view('products.index')->with('products',$products);
     }
